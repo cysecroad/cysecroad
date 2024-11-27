@@ -1,0 +1,43 @@
+.entry-cover img {
+  max-height: 150px;    /* Set your desired height */
+  object-fit: cover;    /* This ensures image fills the space */
+  /* object-fit: fill;    This ensures image stretches or shrink in the space */
+  width: 100%;         /* Maintains full width */
+}
+
+.post-content {
+  font-size: 16px;      /* Base size - very readable on most screens */
+  line-height: 1.6;     /* Comfortable line spacing */
+}
+
+/* Optional: subtle hover effect */
+.post-single:hover {
+  box-shadow: 0 8px 8px rgba(74, 255, 220, 0.15);
+}
+
+/* For code blocks - slightly smaller but still very readable */
+.post-content pre {
+  font-size: 14px;
+}
+
+/* For inline code */
+.post-content code {
+  font-size: 14px;
+}
+
+/* Optional: make text slightly smaller on mobile */
+@media screen and (max-width: 640px) {
+  .post-content {
+      font-size: 15px;
+  }
+  .post-single{
+    padding: 10px;
+  }
+}
+
+/* Wider post content on desktop */
+@media screen and (min-width: 960px) {  
+  .post-single {
+      padding: 20px;
+  }
+}

@@ -1,0 +1,8 @@
+{
+    "name": "cysecroad",
+    "version": "1.0.0",
+    "description": "My road to cybersecurity carrer",
+    "scripts": {
+      "build": "hugo"
+    }
+  }

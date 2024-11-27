@@ -1,0 +1,19 @@
+.related-posts {
+    margin-top: 2rem;
+    padding: 1rem;
+    border-top: 1px solid #eee;
+  }
+  
+  .related-posts ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .related-posts li {
+    margin-bottom: 1rem;
+  }
+  
+  .related-posts small {
+    color: #666;
+    margin-left: 0.5rem;
+  }

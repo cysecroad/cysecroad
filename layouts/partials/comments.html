@@ -1,0 +1,43 @@
+{{- if not .Site.Params.disableComments }}
+<!-- Theme synchronization script -->
+<script>
+  let giscusTheme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+  
+  function updateGiscusTheme() {
+    const iframe = document.querySelector('iframe.giscus-frame');
+    if (!iframe) return;
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: giscusTheme } } },
+      'https://giscus.app'
+    );
+  }
+
+  // Update on theme switch
+  document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        giscusTheme = giscusTheme === 'dark' ? 'light' : 'dark';
+        setTimeout(updateGiscusTheme, 200);
+      });
+    }
+  });
+</script>
+
+<script src="https://giscus.app/client.js"
+  data-repo="cysecroad/cysecroadcomments"
+  data-repo-id="R_kgDONVTaZg"
+  data-category="General"
+  data-category-id="DIC_kwDONVTaZs4CkoZ1"
+  data-mapping="title"
+  data-strict="1"
+  data-reactions-enabled="1"
+  data-emit-metadata="1"
+  data-input-position="top"
+  data-theme="preferred_color_scheme"
+  data-lang="en"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async>
+</script>
+{{- end }} 

@@ -1,0 +1,28 @@
+.post-entry {
+    border-left: 3px solid #4bffdc;  /* Kali Linux green */
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    background: var(--entry);
+    box-shadow: 0 4px 6px rgba(74, 255, 220, 0.1);  /* Subtle green tinted shadow */
+    transition: all 0.3s ease;
+}
+
+.post-entry:hover {
+    border-left-width: 6px;
+    box-shadow: 0 8px 15px rgba(74, 255, 220, 0.15);  /* Deeper green shadow on hover */
+    transform: translateY(-2px);
+}
+
+/* Optional: Add a subtle green glow on hover */
+.post-entry:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(74, 255, 220, 0.1);
+    z-index: -1;
+}

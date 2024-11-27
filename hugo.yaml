@@ -1,0 +1,138 @@
+baseURL: 'https://cysecroad.com'
+languageCode: 'en-us'
+title: 'CySecRoad'
+theme: ["PaperMod"]
+
+# Important for Vercel
+build:
+  noJSConfigInAssets: true
+
+  # This enables emoji integration in form :wave:
+enableEmoji: true
+
+# Menus
+menu:
+  main:
+    - identifier:   Search 
+      name:         "Search 🔎"
+      url:          /search/
+      weight:       10
+    - identifier:   Archives
+      name:         Archives
+      url:          /archives/
+      weight:       20
+    - identifier:   Guides
+      name:         Guides
+      url:          /guides/
+      weight:       30
+
+# Added parameters
+params:
+
+  # Home page description
+  homeInfoParams:
+    Title:          "sudo cat /my_brain"
+    Content:  |
+      ¡Bienvenidos!
+      This website is my personal blog where I document my journey into cybersecurity.
+      When I'm not diving into security concepts and hacking challenges, you can find me learning Spanish (¡sí, español!).
+      Follow along as I navigate this exciting path - I'd love to share my experiences with you! ¡Hasta luego, amigos!
+  # You can add this to control max width
+  profileMode:
+    enabled: false
+
+  # Added socials
+  socialIcons:
+    - name: X
+      title: "Follow me on X"
+      url: "https://x.com/cysecroad"
+    - name: github
+      title: "Watch my work"
+      url: "https://github.com/cysecroad"
+
+
+  defaultTheme: auto # to switch between dark or light according to browser theme
+  disableThemeToggle: false
+
+  # Display share buttons at the bottom for posts
+  ShowShareButtons: true
+  ShareButtons: ["linkedin", "twitter", "reddit", "whatsapp", "telegram"] # To customize which share buttons to be enabled on page
+
+  # In minutes
+  ShowReadingTime: true
+
+  # For posts
+  ShowBreadCrumbs: true
+  ShowPath: true
+
+  # Adding previous/next to the bottom of our screen for posts
+  ShowPostNavLinks: true
+
+  # On codes, make copying easy
+  ShowCodeCopyButtons: true
+
+  # Enabling comments on posts
+  comments: true
+  disableComments: false # Enable/disable comments globally
+  # Added in ./layouts/partials/comments.html
+  giscus:
+    enabled: true
+    repo: "cysecroad/cysecroadcomments"
+    repoID: "R_kgDONVTaZg"
+    category: "General"
+    categoryID: "DIC_kwDONVTaZs4CkoZ1"
+    mapping: "title"
+    strict: "1"
+    reactionsEnabled: "1"
+    inputPosition: "top"
+    theme: "preferred_color_scheme"
+    lang: "en"
+    data-loading: "lazy"
+    crossorigin: "anonymous"
+
+  assets:
+    disableHLJS: true
+    favicon: "/favicon.ico"
+    favicon16x16: "/favicon-16x16.png"
+    favicon32x32: "/favicon-32x32.png"
+    apple_touch_icon: "/apple-touch-icon.png"
+    safari_pinned_tab: "/favicon-32x32.png"
+    android-chrome-192x192: "/android-chrome-192x192.png"
+    android-chrome-192x192: "/android-chrome-512x512.png"
+
+  # What will be displayed on landing page
+  mainSections:
+    - blog
+
+  # For search
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
+# To have related tags be displayed on each post/guide (with ./layouts/partials/related.html and ./assets/css/extended/related.css)
+related:
+  includeNewer: true
+  threshold: 60
+  toLower: false
+  indices:
+    - name: tags
+      weight: 100
+    - name: categories
+      weight: 70
+    - name: keywords
+      weight: 50
+    - name: date
+      weight: 10    
+
+
+# Important for search
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
