@@ -113,6 +113,8 @@ params:
     minMatchCharLength: 0
     keys: ["title", "permalink", "summary", "content"]
 
+    copyright: "© 2024 CySecRoad. All rights reserved."
+
 # To have related tags be displayed on each post/guide (with ./layouts/partials/related.html and ./assets/css/extended/related.css)
 related:
   includeNewer: true

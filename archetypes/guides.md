@@ -3,6 +3,12 @@ title: "{{ replace .File.ContentBaseName "-" " " | title }}"
 date: {{ .Date }}
 draft: true
 ShowToc: true
+
+section: "guides"
+url: "/guides/"
+params:
+  author: "El Viajero"
+
 tags: []
 categories: []
 keywords: []
@@ -18,7 +24,6 @@ editPost:
   URL: "mailto:cysecroad@gmail.com"
   Text: "Suggest Changes" # edit text
   appendFilePath: true # to append file path to Edit link
-url: "/guides/"
 ---
 
 # 
