@@ -6,7 +6,7 @@
 }
 
 .post-content {
-  font-size: 16px;      /* Base size - very readable on most screens */
+  font-size: 1em;      /* Base size - very readable on most screens */
   line-height: 1.6;     /* Comfortable line spacing */
 }
 
@@ -17,18 +17,18 @@
 
 /* For code blocks - slightly smaller but still very readable */
 .post-content pre {
-  font-size: 14px;
+  font-size: 0.9em;
 }
 
 /* For inline code */
 .post-content code {
-  font-size: 14px;
+  font-size: 0.9em;
 }
 
 /* Optional: make text slightly smaller on mobile */
 @media screen and (max-width: 640px) {
   .post-content {
-      font-size: 15px;
+      font-size: 0.9em;
   }
   .post-single{
     padding: 10px;
