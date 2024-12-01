@@ -1,3 +1,7 @@
 public/
 resources/
 .hugo_build.loc
+node_modules/
+.vercel
+.env
+.env.*

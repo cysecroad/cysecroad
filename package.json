@@ -2,10 +2,15 @@
     "name": "cysecroad",
     "version": "1.0.0",
     "description": "My road to cybersecurity carrer",
+    "private": true,
     "scripts": {
-        "build": "hugo"
+        "build": "hugo",
+        "dev": "hugo server -D",
+        "clean": "hugo clean"
     },
     "dependencies": {
         "@vercel/analytics": "^1.4.1"
-    }
+    },
+    "author": "El Viajero",
+    "license": "MIT"
 }
