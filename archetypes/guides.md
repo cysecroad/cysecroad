@@ -6,13 +6,16 @@ ShowToc: true
 
 section: "guides"
 url: "/guides/"
-params:
-  author: "El Viajero"
 
 tags: []
 categories: []
 keywords: []
+
+params:
+  author: "El Viajero"
+
 summary: " "
+  
 cover:
     image: "guide.png"
     alt: "Guide image"

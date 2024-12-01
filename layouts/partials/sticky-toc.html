@@ -1,0 +1,8 @@
+{{- if (.Param "ShowToc") }}
+<div class="sticky-toc">
+    <div class="sticky-toc-inner">
+        <div class="sticky-toc-title">On this page</div>
+        {{ .TableOfContents }}
+    </div>
+</div>
+{{- end }}

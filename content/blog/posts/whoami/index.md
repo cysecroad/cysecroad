@@ -6,12 +6,14 @@ ShowToc: true
 
 section: "blog"
 url: "/blog/whoami"
+
+tags: [cybersecurity, career-change, verification, tech-career, learning-path]
+categories: [personal, career, technology, cybersecurity, posts]
+keywords: [verification engineer, cybersecurity transition, digital design verification, vlsi systems, career change tech, hardware to security, verification career, cybersecurity roadmap, security certification path, spanish tech blog, verification skills, security career preparation, jira experience, rtl debugging, technical career shift, cybersecurity learning path, security+ certification, hackthebox preparation, digital systems verification, professional development]
+
 params:
   author: "El Viajero"
 
-tags: ["digital design verification", "verification", "roadmap", "decision", "road to cybersecurity"]
-categories: ["about me", "verification"]
-keywords: ["digital", "design", "verification", "roadmap", "decision", "road", "cybersecurity", "spanish"]
 summary: " "
 
 cover:

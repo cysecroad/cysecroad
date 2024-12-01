@@ -1,0 +1,64 @@
+/* Container for post content and sticky TOC */
+.post-content {
+    position: relative;
+}
+
+/* Sticky TOC styles */
+.sticky-toc {
+    display: none; /* Hidden by default on mobile */
+}
+
+@media (min-width: 1400px) {
+    /* Show sticky TOC on desktop */
+    .sticky-toc {
+        display: block;
+        position: fixed;
+        right: 5vh; /* Align with the right side of content */
+        top: 15vh; /* Position below the top menu */
+        width: 25vh;
+        height: 100vh; /* Full viewport height */
+    }
+
+    .sticky-toc-inner {
+        position: sticky;
+        top: 100px;
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+        padding: 20px;
+        border-left: 0px solid var(--border);
+        font-size: 0.9rem;
+    }
+
+    .sticky-toc-title {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: var(--secondary);
+    }
+
+    /* Style TOC links */
+    .sticky-toc nav ul {
+        list-style: symbols();
+        padding-left: 10px;
+    }
+
+    .sticky-toc nav ul li {
+        margin: 8px 0;
+    }
+
+    .sticky-toc nav ul li a {
+        color: var(--secondary);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .sticky-toc nav ul li a:hover {
+        color: #12ffcc;
+    }
+}
+
+/* Reset margin for mobile */
+@media (max-width: 1399px) {
+    .post-content {
+        margin-right: 0;
+    }
+}

@@ -17,14 +17,26 @@ menu:
       name:         "Search 🔎"
       url:          /search/
       weight:       10
-    - identifier:   Archives
-      name:         Archives
-      url:          /archives/
+    - identifier:   Blog
+      name:         Blog
+      url:          /blog/
       weight:       20
     - identifier:   Guides
       name:         Guides
       url:          /guides/
       weight:       30
+    - identifier:   Tags
+      name:         Tags
+      url:          /tags/
+      weight:       40
+    - identifier:   Categories
+      name:         Categories
+      url:          /categories/
+      weight:       50
+    - identifier:   Archives
+      name:         Archives
+      url:          /archives/
+      weight:       60
 
 # Added parameters
 params:
@@ -102,6 +114,7 @@ params:
   # What will be displayed on landing page
   mainSections:
     - blog
+    - guides
 
   # For search
   fuseOpts:
@@ -137,3 +150,11 @@ outputs:
     - HTML
     - RSS
     - JSON
+
+# Some extensions and setting must be manually enabled in goldmark
+markup:
+  defaultMarkdownHandler: goldmark
+  goldmark:
+    extensions:
+      highlighting: true 
+      table: true

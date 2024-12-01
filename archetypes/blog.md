@@ -6,13 +6,16 @@ ShowToc: true
 
 section: "blog"
 url: "/blog/"
-params:
-  author: "El Viajero"
 
 tags: []
 categories: []
 keywords: []
+
+params:
+  author: "El Viajero"
+
 summary: " "
+  
 cover:
     image: "cover.png"
     alt: "Cover image"
