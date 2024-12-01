@@ -1,6 +1,6 @@
 public/
 resources/
-.hugo_build.loc
+.hugo_build.lock
 node_modules/
 .vercel
 .env
