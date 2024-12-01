@@ -1,7 +1,7 @@
 ---
 title: "Blog Formatting Guide"
 date: 2024-11-28T16:32:40+01:00
-draft: true
+draft: false
 ShowToc: true
 
 section: "guides"
