@@ -47,7 +47,7 @@ Writing will allow me to reflect on my growth, solidify my understanding and hop
 
 ### What i though Digital Design Verification was
 
-In university, I had a course in VLSI [^1] systems. To keep it short, for you who don't know what [VLSI]("https://resources.pcb.cadence.com/blog/2020-vlsi-technology-its-history-and-uses-in-modern-technology" "Learn more about VLSI from Cadence") is, it is the process of creating an integrated circuit (IC) by combining millions or billions  transistors onto a single chip. 
+In university, I had a course in VLSI [^1] systems. To keep it short, for you who don't know what [VLSI]("https://resources.pcb.cadence.com/blog/2020-vlsi-technology-its-history-and-uses-in-modern-technology" 'Learn more about VLSI from Cadence') is, it is the process of creating an integrated circuit (IC) by combining millions or billions  transistors onto a single chip. 
 As far as we learned, there are three phases before chip production (*Spoiler: There are actually many more*). Those three are:
 1. **Design** of chip based on specification
 2. **Synthesis** of said design and it's iterations until it can be synthesized 

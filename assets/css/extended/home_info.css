@@ -17,7 +17,7 @@
 
 /* Terminal header with proper Kali styling */
 .home-info-no-footer::before {
-  content: "┌──(elguio㉿cysecroad)-[~]";
+  content: "┌──(elviajero㉿cysecroad)-[~]";
   display: block;
   color: var(--kali-text);
   margin-bottom: 10px;
