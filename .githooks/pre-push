@@ -3,7 +3,7 @@
 # Path to this script: .git/hooks/pre-push
 
 protected_branch='main'
-allowed_source='develop'
+allowed_source='main'
 
 while read local_ref local_sha remote_ref remote_sha
 do
