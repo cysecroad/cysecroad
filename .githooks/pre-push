@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Path to this script: .git/hooks/pre-push
+
+protected_branch='main'
+allowed_source='develop'
+
+while read local_ref local_sha remote_ref remote_sha
+do
+    if [[ "${remote_ref##refs/heads/}" = "${protected_branch}" ]]; then
+        # Get the current branch name
+        current_branch=$(git symbolic-ref --short HEAD)
+        
+        if [[ "${current_branch}" != "${allowed_source}" ]]; then
+            echo "ERROR: Pushing to ${protected_branch} is only allowed from ${allowed_source} branch."
+            echo "You're currently on branch: ${current_branch}"
+            exit 1
+        fi
+        
+        # Optional: Add additional checks here if needed
+        # For example, you could check if the branch is up to date
+        
+        echo "Pushing to ${protected_branch} from ${allowed_source} - allowed."
+    fi
+done
+
+exit 0
