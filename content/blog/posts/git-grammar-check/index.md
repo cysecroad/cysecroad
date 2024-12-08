@@ -256,6 +256,27 @@ We can edit the configuration's a bit, so it won't be jump simple english checki
     // List of languages to use for spell checking
     "language": "en,es",
     
+
+    // Enable mixing languages within the same file
+    "enableFiletypes": ["*"],
+    "enabledLanguageIds": ["*"],
+    "allowCompoundWords": true,
+
+    // Import Spanish dictionary
+    "import": [
+        "@cspell/dict-es-es/cspell-ext.json"
+    ],
+
+    // Words to always consider correct
+    "words": [
+        "CySecRoad"  // Your project name
+        // Add your custom words here
+        "ciberseguridad",
+        "cybersecurity",
+        "pentesting",
+        "hacking"
+    ],
+
     // Dictionaries to load
     "dictionaries": [
         "en_US",      // American English
@@ -264,12 +285,6 @@ We can edit the configuration's a bit, so it won't be jump simple english checki
         "companies",  // Company names
         "softwareTerms", // Programming terms
         "misc"        // Miscellaneous terms
-    ],
-
-    // Words to always consider correct
-    "words": [
-        "CySecRoad"  // Your project name
-        // Add your custom words here
     ],
 
     // Words to always consider incorrect
@@ -305,17 +320,13 @@ We can edit the configuration's a bit, so it won't be jump simple english checki
     // Minimum word length to check
     "minWordLength": 3,
 
-    // Settings for specific file types
-    "overrides": [
+    // No more language-specific overrides since we want mixed language support
+    "languageSettings": [
         {
-            "filename": "**/*.es.md",
-            "language": "es",
-            "dictionaries": ["es", "es-ES"]
-        },
-        {
-            "filename": "**/*.en.md",
-            "language": "en",
-            "dictionaries": ["en_US"]
+            "languageId": "*",
+            "locale": "*",
+            "allowCompoundWords": true,
+            "enabledLanguageIds": ["en", "es"]
         }
     ]
 }

@@ -1,24 +1,29 @@
 {
   "version": "0.2",
-  
   "language": "en,es",
   
+  "enableFiletypes": ["*"],
+  "enabledLanguageIds": ["*"],
+  "allowCompoundWords": true,
+  
+  "import": [
+      "@cspell/dict-es-es/cspell-ext.json"
+  ],
+  
   "dictionaries": [
-      "en_US",      
-      "es",         
-      "es-ES",     
-      "companies", 
-      "softwareTerms", 
-      "misc" 
+      "en_US",
+      "es",
+      "companies",
+      "softwareTerms",
+      "misc"
   ],
 
   "words": [
-      "CySecRoad" 
-  ],
-
-  "flagWords": [
-      "irregardless",
-      "alot"
+      "CySecRoad",
+      "ciberseguridad",
+      "cybersecurity",
+      "pentesting",
+      "hacking"
   ],
 
   "ignorePaths": [
@@ -28,30 +33,12 @@
       "dist/**"
   ],
 
-  "files": [
-      "**/*.md",
-      "**/*.mdx",
-      "**/*.txt"
-  ],
-
-  "allowCompoundWords": true,
-
-  "maxNumberOfProblems": 1000,
-
-  "maxDuplicateProblems": 100,
-
-  "minWordLength": 3,
-
-  "overrides": [
+  "languageSettings": [
       {
-          "filename": "**/*.es.md",
-          "language": "es",
-          "dictionaries": ["es", "es-ES"]
-      },
-      {
-          "filename": "**/*.en.md",
-          "language": "en",
-          "dictionaries": ["en_US"]
+          "languageId": "*",
+          "locale": "*",
+          "allowCompoundWords": true,
+          "enabledLanguageIds": ["en", "es"]
       }
   ]
 }
