@@ -19,18 +19,20 @@ TARGET_BRANCH="develop"
 # Get the branch we're merging from (source branch)
 SOURCE_BRANCH=$(git rev-parse -q --verify MERGE_HEAD || true)
 
-if [ "$CURRENT_BRANCH" == "main" ]; then
+# Branch we want to protect merging to
+PROTECTED_BRANCH='main'
+
+
+if [ "$CURRENT_BRANCH" = "$PROTECTED_BRANCH" ]; then
     if [ -n "$SOURCE_BRANCH" ]; then
         SOURCE_BRANCH=$(git name-rev --name-only $SOURCE_BRANCH)
         SOURCE_BRANCH=${SOURCE_BRANCH##refs/heads/}
         SOURCE_BRANCH=${SOURCE_BRANCH%%~*}
     fi
 
-    PROTECTED_BRANCH='main'
-
-    if [ "$CURRENT_BRANCH" = "$protected_branch" ]; then
+    if [ "$CURRENT_BRANCH" = "$PROTECTED_BRANCH" ]; then
         if [ "$SOURCE_BRANCH" != "$TARGET_BRANCH" ]; then
-            echo "ERROR: Merging into $protected_branch is only allowed from $TARGET_BRANCH branch."
+            echo "ERROR: Merging into $PROTECTED_BRANCH is only allowed from $TARGET_BRANCH branch."
             echo "You're trying to merge from: $SOURCE_BRANCH"
             exit 1
         fi
