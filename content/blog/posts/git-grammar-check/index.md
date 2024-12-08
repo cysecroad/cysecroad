@@ -255,3 +255,19 @@ For this, we will need to use Git hooks, as Git Actions only works for remote/cl
     git checkout develop
     git merge test-spellcheck
     ```
+5. For now, this is only local. To share this with your team:
+   1. Create a hooks directory in your project
+      ```bash
+      mkdir -p .githooks
+      ```
+   2. Store the hook there and tell git to use that directory:
+      ```bash
+      cp .git/hooks/pre-merge-commit .githooks/
+      git config core.hooksPath .githooks
+      ```
+   3. Make the hook executable and commit the changes
+      ```bash
+      chmod +x .githooks/pre-merge-commit
+      git add .githooks
+      git commit -m "Add pre-merge spell check hook"
+      ```
