@@ -1,43 +1,15 @@
- #!/bin/bash
- 
-echo "=== Debug ==="
-echo "Hook is running from .githooks"
-echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
-echo "Merge source: $(git rev-parse --abbrev-ref MERGE_HEAD 2>/dev/null || echo 'none')"
-echo "============="
+#!/bin/bash
 
-# This script runs automatically when you try to merge branches
+    # This script runs automatically when you try to merge branches
 
-# Get the name of the current branch we're on
-# git rev-parse --abbrev-ref HEAD returns the short name of the current branch
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    # Get the name of the current branch we're on
+    # git rev-parse --abbrev-ref HEAD returns the short name of the current branch
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-# The branch we want to protect with spell checking
-# Change this if you want to protect a different branch
-TARGET_BRANCH="develop"
+    # The branch we want to protect with spell checking
+    # Change this if you want to protect a different branch
+    TARGET_BRANCH="develop"
 
-# Get the branch we're merging from (source branch)
-SOURCE_BRANCH=$(git rev-parse -q --verify MERGE_HEAD || true)
-
-# Branch we want to protect merging to
-PROTECTED_BRANCH='main'
-
-
-if [ "$CURRENT_BRANCH" = "$PROTECTED_BRANCH" ]; then
-    if [ -n "$SOURCE_BRANCH" ]; then
-        SOURCE_BRANCH=$(git name-rev --name-only $SOURCE_BRANCH)
-        SOURCE_BRANCH=${SOURCE_BRANCH##refs/heads/}
-        SOURCE_BRANCH=${SOURCE_BRANCH%%~*}
-    fi
-
-    if [ "$CURRENT_BRANCH" = "$PROTECTED_BRANCH" ]; then
-        if [ "$SOURCE_BRANCH" != "$TARGET_BRANCH" ]; then
-            echo "ERROR: Merging into $PROTECTED_BRANCH is only allowed from $TARGET_BRANCH branch."
-            echo "You're trying to merge from: $SOURCE_BRANCH"
-            exit 1
-        fi
-    fi
-else 
     # Only run the checks when we're merging into the target branch (develop)
     if [ "$CURRENT_BRANCH" = "$TARGET_BRANCH" ]; then
         echo "Running spell and grammar checks before merge..."
@@ -76,7 +48,6 @@ else
             echo "No markdown files to check."
         fi
     fi
-fi
 
-# Exit successfully - allow the merge to proceed
-exit 0
+    # Exit successfully - allow the merge to proceed
+    exit 0
