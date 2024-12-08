@@ -23,8 +23,13 @@
       "ciberseguridad",
       "cybersecurity",
       "pentesting",
-      "hacking"
-  ],
+      "hacking",
+      "spanish",
+      "VLSI",
+      "hugo",
+      "attrlink",
+      "vimeo"
+  ], 
 
   "ignorePaths": [
       "node_modules/**",

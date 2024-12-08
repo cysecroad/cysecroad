@@ -247,6 +247,8 @@ For this, we will need to use Git hooks, as Git Actions only works for remote/cl
 
 ## Updates
 
+### Updating cspell configuration file
+
 We can edit the configuration's a bit, so it won't be jump simple english checking
 ```json
 {
@@ -330,4 +332,53 @@ We can edit the configuration's a bit, so it won't be jump simple english checki
         }
     ]
 }
+```
+
+## Making this all make sense
+
+We wan't to do this, so we won't have any weird spelling errors on our blog.\
+Because of this, we should also make it possible to merge only develop with main branch\
+To do this locally, add following code to the `.git/hooks/pre-merge-commit`
+```bash
+# Protection for main branch
+SOURCE_BRANCH=$(git rev-parse --abbrev-ref MERGE_HEAD)
+
+# If we're on main branch
+if [ "$CURRENT_BRANCH" = "main" ]; then
+    # Check if the merge is coming from develop
+    if [ "$SOURCE_BRANCH" != "develop" ]; then
+        echo "❌ ERROR: You can only merge into main from develop branch"
+        echo "Current merge attempt: $SOURCE_BRANCH -> main"
+        exit 1
+    fi
+fi
+```
+
+Remotely, we will set up pull request checking:
+1. Go to your GitHub repository
+2. Click on "Settings"
+3. In the left sidebar, click "Branches"
+4. Under "Branch protection rules" click "Add rule"
+5. Set up the rule:
+   1. First, give your ruleset a name
+   2. In "Target branches" section, add target annd add `main` as target branch pattern
+   3. In the "Rules" section, you should enable:
+      - "Require a pull request before merging"
+      - "Block force pushes" 
+      - "Restrict deletions" 
+   4. Under "Require a pull request before merging" settings:
+      - Set "Required approvals" to at least 1 if you want reviews
+      - Set "Dismiss stale pull request approvals when new commits are pushed" 
+      - If you have code owners, keep "Require review from Code Owners" checked
+
+## Running spellcheck locally and overruling the merge 
+
+### Local check
+
+### Overruling the merge
+
+To make a merge, even with misspelled word, you can do the following\
+`--no-verify` flag skips all pre-merge hooks
+```bash
+git merge --no-verify branch-name
 ```
