@@ -1,16 +1,29 @@
 {
-    "name": "cysecroad",
-    "version": "1.0.0",
-    "description": "My road to cybersecurity carrer",
-    "private": true,
-    "scripts": {
-        "build": "hugo",
-        "dev": "hugo server -D",
-        "clean": "hugo clean"
-    },
-    "dependencies": {
-        "@vercel/analytics": "^1.4.1"
-    },
-    "author": "El Viajero",
-    "license": "MIT"
+  "name": "cysecroad",
+  "version": "1.0.0",
+  "description": "My road to cybersecurity carrer",
+  "private": true,
+  "scripts": {
+    "build": "hugo",
+    "dev": "hugo server -D",
+    "clean": "hugo clean"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.4.1"
+  },
+  "author": "El Viajero",
+  "license": "MIT",
+  "main": "index.js",
+  "devDependencies": {
+    "cspell": "^8.16.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cysecroad/cysecroad.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/cysecroad/cysecroad/issues"
+  },
+  "homepage": "https://github.com/cysecroad/cysecroad#readme"
 }
