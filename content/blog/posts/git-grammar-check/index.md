@@ -225,6 +225,33 @@ For this, we will need to use Git hooks, as Git Actions only works for remote/cl
     ```
 4. Now, when you try to merge locally
     ```bash
+    # Create and switch to a new test branch
+    git checkout -b test-spellcheck
+
+    # Create a markdown file with spelling mistakes
+    echo "This is a testt documment with misspelled wurds." > test-post.md
+
+    # Add and commit the file
+    git add test-post.md
+    git commit -m "Add test post with mistakes"
+
+    # Try again
+    git checkout develop
+    git merge test-spellcheck
+
+    # Make sure it doesn't work
+    # To check if correct spelling works
+    # Go back to test branch
+    git checkout test-spellcheck
+
+    # Fix the file
+    echo "This is a test document with spelled words." > test-post.md
+
+    # Commit the fix
+    git add test-post.md
+    git commit -m "Fix spelling"
+
+    # Try merge again
     git checkout develop
     git merge test-spellcheck
     ```
