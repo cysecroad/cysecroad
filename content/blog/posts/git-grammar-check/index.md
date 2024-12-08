@@ -143,6 +143,18 @@ What should we do after completing every little part of making changes? **Verify
     # Create a test markdown file with some spelling mistakes
     echo "This is a testt documment with misspelled wurds." > test-post.md
     ```
+3. Then push this branch
+    ```bash
+    git add test-post.md
+    git commit -m "Add test post with spelling mistakes"
+    git push origin test-spellcheck
+    ```
+4. Now, on GitHub repository
+   1. Click on "Pull requests"
+   2. Click "New pull request"
+   3. Set "base" to develop
+   4. Set "compare" to test-spellcheck
+   5. Create the pull request
 
 
 ## Local merging spell check
@@ -225,49 +237,6 @@ For this, we will need to use Git hooks, as Git Actions only works for remote/cl
     ```
 4. Now, when you try to merge locally
     ```bash
-    # Create and switch to a new test branch
-    git checkout -b test-spellcheck
-
-    # Create a markdown file with spelling mistakes
-    echo "This is a testt documment with misspelled wurds." > test-post.md
-
-    # Add and commit the file
-    git add test-post.md
-    git commit -m "Add test post with mistakes"
-
-    # Try again
-    git checkout develop
-    git merge test-spellcheck
-
-    # Make sure it doesn't work
-    # To check if correct spelling works
-    # Go back to test branch
-    git checkout test-spellcheck
-
-    # Fix the file
-    echo "This is a test document with spelled words." > test-post.md
-
-    # Commit the fix
-    git add test-post.md
-    git commit -m "Fix spelling"
-
-    # Try merge again
     git checkout develop
     git merge test-spellcheck
     ```
-5. For now, this is only local. To share this with your team:
-   1. Create a hooks directory in your project
-      ```bash
-      mkdir -p .githooks
-      ```
-   2. Store the hook there and tell git to use that directory:
-      ```bash
-      cp .git/hooks/pre-merge-commit .githooks/
-      git config core.hooksPath .githooks
-      ```
-   3. Make the hook executable and commit the changes
-      ```bash
-      chmod +x .githooks/pre-merge-commit
-      git add .githooks
-      git commit -m "Add pre-merge spell check hook"
-      ```
