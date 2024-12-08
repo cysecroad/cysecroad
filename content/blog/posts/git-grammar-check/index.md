@@ -155,6 +155,10 @@ What should we do after completing every little part of making changes? **Verify
    3. Set "base" to develop
    4. Set "compare" to test-spellcheck
    5. Create the pull request
+5. After creating the PR, you can check the workflow results
+   - Go to the PR page
+   - Look for the "Checks" tab or scroll down to see the GitHub Actions status
+   - Click on the "Details" link next to the spell check workflow to see the full output
 
 
 ## Local merging spell check
@@ -240,3 +244,79 @@ For this, we will need to use Git hooks, as Git Actions only works for remote/cl
     git checkout develop
     git merge test-spellcheck
     ```
+
+## Updates
+
+We can edit the configuration's a bit, so it won't be jump simple english checking
+```json
+{
+    // Version of the config file format
+    "version": "0.2",
+    
+    // List of languages to use for spell checking
+    "language": "en,es",
+    
+    // Dictionaries to load
+    "dictionaries": [
+        "en_US",      // American English
+        "es",         // Spanish
+        "es-ES",      // Spanish (Spain)
+        "companies",  // Company names
+        "softwareTerms", // Programming terms
+        "misc"        // Miscellaneous terms
+    ],
+
+    // Words to always consider correct
+    "words": [
+        "CySecRoad"  // Your project name
+        // Add your custom words here
+    ],
+
+    // Words to always consider incorrect
+    "flagWords": [
+        "irregardless",
+        "alot"
+    ],
+
+    // Ignore files and folders
+    "ignorePaths": [
+        "node_modules/**",
+        ".git/**",
+        "public/**",
+        "dist/**"
+    ],
+
+    // File patterns to check
+    "files": [
+        "**/*.md",
+        "**/*.mdx",
+        "**/*.txt"
+    ],
+
+    // Allow acronyms that are uppercase
+    "allowCompoundWords": true,
+
+    // Maximum number of problems to report
+    "maxNumberOfProblems": 1000,
+
+    // Maximum word length
+    "maxDuplicateProblems": 100,
+
+    // Minimum word length to check
+    "minWordLength": 3,
+
+    // Settings for specific file types
+    "overrides": [
+        {
+            "filename": "**/*.es.md",
+            "language": "es",
+            "dictionaries": ["es", "es-ES"]
+        },
+        {
+            "filename": "**/*.en.md",
+            "language": "en",
+            "dictionaries": ["en_US"]
+        }
+    ]
+}
+```

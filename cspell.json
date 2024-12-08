@@ -1,9 +1,57 @@
 {
-    "version": "0.2",
-    "language": "en",
-    "words": [],
-    "flagWords": [],
-    "ignorePaths": [
-      "node_modules/**"
-    ]
-  }
+  "version": "0.2",
+  
+  "language": "en,es",
+  
+  "dictionaries": [
+      "en_US",      
+      "es",         
+      "es-ES",     
+      "companies", 
+      "softwareTerms", 
+      "misc" 
+  ],
+
+  "words": [
+      "CySecRoad" 
+  ],
+
+  "flagWords": [
+      "irregardless",
+      "alot"
+  ],
+
+  "ignorePaths": [
+      "node_modules/**",
+      ".git/**",
+      "public/**",
+      "dist/**"
+  ],
+
+  "files": [
+      "**/*.md",
+      "**/*.mdx",
+      "**/*.txt"
+  ],
+
+  "allowCompoundWords": true,
+
+  "maxNumberOfProblems": 1000,
+
+  "maxDuplicateProblems": 100,
+
+  "minWordLength": 3,
+
+  "overrides": [
+      {
+          "filename": "**/*.es.md",
+          "language": "es",
+          "dictionaries": ["es", "es-ES"]
+      },
+      {
+          "filename": "**/*.en.md",
+          "language": "en",
+          "dictionaries": ["en_US"]
+      }
+  ]
+}
