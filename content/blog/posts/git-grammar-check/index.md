@@ -1,7 +1,7 @@
 ---
-title: "Teaching Git Some Grammar: Because Code Reviews Are Hard Enough"
+title: "When Git Becomes Your Blog Editor: Automated Grammar Checking for Tech Writers"
 date: 2024-12-09T09:00:00+01:00
-draft: true
+draft: false
 ShowToc: true
 
 section: "blog"
@@ -29,9 +29,11 @@ editPost:
   appendFilePath: true # to append file path to Edit link
 ---
 
-# Teaching Git Some Grammar: Because Code Reviews Are Hard Enough
+# When Git Becomes Your Blog Editor: Automated Grammar Checking for Tech Writers
 
 ¡Hola amigos! Ever sent an important email to notice that embarrassing typo right after hitting send? Now imagine doing that with your technical documentation that thousands of developers might read. Or submitting a PR with working code, only to have someone comment "typo in line 47" and nothing else? **Or starting your own blog and…** *¡Qué horror!*
+
+I know this is still not cybersecurity, but *despacio*, we will get there. We have to set up our blog first.
 
 ## Why we want to do this
 
@@ -158,7 +160,7 @@ Then, create *cspell.json*
 
 ### Testing if this works (As we use to say it *trust but verify*)
 
-As any verification engineer would tell you (and boy, do we love telling people this), if you haven't tested it, it doesn't work! Let's intentionally break things - it's the only way to be sure our checks are working.
+As any verification engineer would tell you (and boy, do we love telling people this), if you haven't tested it, it doesn't work! Let's intentionally break stuff - it's the only way to be sure our checks are working.
 
 1. First, make sure to push the workflow file to repository (it's okay to do this on develop branch)
     ```bash
@@ -196,12 +198,26 @@ As any verification engineer would tell you (and boy, do we love telling people 
 
 While GitHub Actions are great, waiting for the cloud to tell you about typos is like waiting for your code to compile - ain't nobody got time for that! Let's set up local checks.
 
-We want to set this spell check in a way that when we do merge locally, it's invoked and merging won't be done until this check passes.\
-For this, we will need to use Git hooks, as Git Actions only works for remote/cloud checks.
+We want to set this spell check in a way that when we do merge locally, it's invoked and merging won't be executed until this check passes.\
+For this, we will need to use Git hooks, as Git Actions works only for remote/cloud checks.
 
 1. First, install all the required packages
     ```bash
-    npm install --save-dev cspell write-good
+    # Install cspell
+    npm install --save-dev cspell @cspell/dict-es-es 
+
+    # Install textlint and common rules
+    npm install --save-dev \
+      textlint \
+      textlint-rule-write-good \
+      textlint-rule-no-dead-link \
+      textlint-rule-terminology \
+      textlint-rule-period-in-list-item \
+      textlint-rule-no-start-duplicated-conjunction \
+      @textlint/textlint-plugin-markdown
+
+    # Install proselint
+    pip install proselint
     ```
 2. Create the hooks directory if it doesn't exist
     ```bash
@@ -272,7 +288,36 @@ For this, we will need to use Git hooks, as Git Actions only works for remote/cl
     ```bash
     chmod +x .git/hooks/pre-merge-commit
     ```
-4. Now, when you try to merge locally
+4. Let's create a `.textlintrc` file
+    ```json
+    {
+      "plugins": [
+        "@textlint/markdown"
+      ],
+      "rules": {
+        "write-good": {
+          "passive": true,
+          "tooWordy": true,
+          "weasel": true,
+          "adverb": true
+        },
+        "terminology": {
+          "defaultTerms": true
+        },
+        "period-in-list-item": true,
+        "no-start-duplicated-conjunction": {
+          "interval": 2
+        },
+        "no-dead-link": {
+          "ignore": [
+            "mailto:",
+            "http://localhost"
+          ]
+        }
+      }
+    }
+    ```
+5. When you try to merge locally
     ```bash
     git checkout develop
     git merge test-spellcheck
@@ -368,7 +413,7 @@ Remember how I mentioned I'm learning Spanish after that trip to Madrid? Well, m
 }
 ```
 
-## Running spellcheck locally and overruling the merge checks
+## Running spell check locally and overruling the merge checks
 
 ### Local check: For the Impatient Developers
 
@@ -385,31 +430,17 @@ npx cspell file1.md file2.md
 npx cspell "**/*.md"
 ```
 
+To check now
 ```bash
-# Check a single file
-npx write-good path/to/your/file.md
+# Run textlint
+npx textlint your-file.md
 
-# Check multiple files
-npx write-good file1.md file2.md
+# Run proselint
+proselint --json your-file.md
+proselint your-file.md
 
-# Check all markdown files in a directory
-find . -name "*.md" -exec npx write-good {} \;
-```
-
-For more complex analysis, we are using TextLint and proselint
-```bash
-# Install textlint and common rules
-npm install --save-dev \
-  textlint \
-  textlint-rule-write-good \
-  textlint-rule-no-dead-link \
-  textlint-rule-terminology \
-  textlint-rule-period-in-list-item \
-  textlint-rule-no-start-duplicated-conjunction \
-  @textlint/textlint-plugin-markdown
-
-# Install proselint
-pip install proselint
+# Run both
+npx textlint your-file.md && proselint your-file.md
 ```
 
 
