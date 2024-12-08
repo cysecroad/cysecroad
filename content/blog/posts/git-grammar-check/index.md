@@ -5,7 +5,7 @@ draft: true
 ShowToc: true
 
 section: "blog"
-url: "/blog/"
+url: "/blog/grammar-pre-push"
 
 tags: []
 categories: []
