@@ -1,0 +1,26 @@
+{
+  "plugins": [
+    "@textlint/markdown"
+  ],
+  "rules": {
+    "write-good": {
+      "passive": true,
+      "tooWordy": true,
+      "weasel": true,
+      "adverb": true
+    },
+    "terminology": {
+      "defaultTerms": true
+    },
+    "period-in-list-item": true,
+    "no-start-duplicated-conjunction": {
+      "interval": 2
+    },
+    "no-dead-link": {
+      "ignore": [
+        "mailto:",
+        "http://localhost"
+      ]
+    }
+  }
+}

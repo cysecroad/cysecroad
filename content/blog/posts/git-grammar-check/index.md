@@ -1,15 +1,15 @@
 ---
-title: "Git Grammar Check"
-date: 2024-12-01T22:41:12+01:00
+title: "Teaching Git Some Grammar: Because Code Reviews Are Hard Enough"
+date: 2024-12-09T09:00:00+01:00
 draft: true
 ShowToc: true
 
 section: "blog"
 url: "/blog/grammar-pre-push"
 
-tags: []
-categories: []
-keywords: []
+tags: ["git", "automation", "blogging", "documentation", "spell-check", "github-actions", "git-hooks"]
+categories: ["tutorials", "automation", "git"]
+keywords: ["git grammar check", "github actions tutorial", "blog automation", "spell check automation", "git hooks tutorial", "documentation tools", "markdown spell check", "technical writing", "blog tools", "cspell configuration", "write-good usage", "git pre-merge hooks"]
 
 params:
   author: "El Viajero"
@@ -29,15 +29,31 @@ editPost:
   appendFilePath: true # to append file path to Edit link
 ---
 
-# 
+# Teaching Git Some Grammar: Because Code Reviews Are Hard Enough
+
+¡Hola amigos! Ever sent an important email to notice that embarrassing typo right after hitting send? Now imagine doing that with your technical documentation that thousands of developers might read. Or submitting a PR with working code, only to have someone comment "typo in line 47" and nothing else? **Or starting your own blog and…** *¡Qué horror!*
 
 ## Why we want to do this
 
+You know what's funny about starting a tech blog? You spend hours perfecting your code examples, making sure every technical detail is spot-on, and then someone comments "you wrote 'recieve' instead of 'receive' in the first paragraph." *¡Ay, caramba!* **We don't want this to happen**\
+After writing my first couple of blog posts about my journey from verification to cybersecurity, I noticed I was spending almost as much time proofreading as writing. And still, those sneaky typos kept slipping through!\
+I decided to do what any reasonable developer would: automate the problem away.
+
+Since I'm planning to write more about my cybersecurity adventures (*aventuras*, as we say in Spanish), I needed something better than just staring at my screen hoping to catch all typos. And being the tech person I am, I thought - why not make Git do the work?
+
+Here's what we're building today:
+
+- A GitHub Action that catches typos before they go public
+- A local pre-merge hook for immediate feedback
+- A bilingual setup because, well, you've seen my Spanish learning attempts in these posts
+
 ## How are we going to do this
 
-### 
+Let's break this down into manageable pieces. And no, I won't make a cooking analogy here - I'm actually writing this while hungry, and that would just be cruel. 🥘
 
-First, locally create the workflow folders inside your project directory
+### Setting Up GitHub Actions
+
+First, let's create our workflow structure. Remember, good organization is like good code - it makes life easier later:
 ```bash
 # cd to you project direcrory
 mkdir -p .github/workflows
@@ -86,6 +102,16 @@ jobs:
       - name: Install write-good
         run: npm install -g write-good
 
+      # Install dependencies including the Spanish dictionary
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install --save-dev @cspell/dict-es-es  
+          npm install --save-dev textlint textlint-rule-write-good textlint-rule-no-dead-link \
+            textlint-rule-terminology textlint-rule-period-in-list-item \
+            textlint-rule-no-start-duplicated-conjunction @textlint/textlint-plugin-markdown
+          pip install proselint
+
       # Step 5: Run the spell checker
       - name: Run spell check
         run: |
@@ -95,15 +121,20 @@ jobs:
           cspell "**/*.{md,mdx,txt}" || exit 1
 
       # Step 6: Run the grammar checker
-      - name: Run grammar check
+      - name: Run textlint
         run: |
-          echo "Running grammar check..."
-          # Find all markdown, mdx, and txt files and check each one
-          # The '|| true' ensures the workflow continues even if write-good finds issues
-          # because we want grammar issues to be warnings, not errors
+          echo "Running textlint check..."
           find . -type f -name "*.md" -o -name "*.mdx" -o -name "*.txt" | while read file; do
             echo "Checking $file"
-            write-good "$file" || true
+            npx textlint "$file" || true
+          done
+
+      - name: Run proselint
+        run: |
+          echo "Running proselint check..."
+          find . -type f -name "*.md" -o -name "*.mdx" -o -name "*.txt" | while read file; do
+            echo "Checking $file"
+            proselint "$file" || true
           done
 ```
 
@@ -125,9 +156,9 @@ Then, create *cspell.json*
 }
 ```
 
-### Testing if this works
+### Testing if this works (As we use to say it *trust but verify*)
 
-What should we do after completing every little part of making changes? **Verify** it works, of course.
+As any verification engineer would tell you (and boy, do we love telling people this), if you haven't tested it, it doesn't work! Let's intentionally break things - it's the only way to be sure our checks are working.
 
 1. First, make sure to push the workflow file to repository (it's okay to do this on develop branch)
     ```bash
@@ -163,7 +194,9 @@ What should we do after completing every little part of making changes? **Verify
 
 ## Local merging spell check
 
-We want to set this spell check in a way that when we do merge locally, it's invoked and mergin won't be available until this check passes.\
+While GitHub Actions are great, waiting for the cloud to tell you about typos is like waiting for your code to compile - ain't nobody got time for that! Let's set up local checks.
+
+We want to set this spell check in a way that when we do merge locally, it's invoked and merging won't be done until this check passes.\
 For this, we will need to use Git hooks, as Git Actions only works for remote/cloud checks.
 
 1. First, install all the required packages
@@ -245,11 +278,12 @@ For this, we will need to use Git hooks, as Git Actions only works for remote/cl
     git merge test-spellcheck
     ```
 
-## Updates
+## Updates: Making it Más Interesante
 
-### Updating cspell configuration file
+### Updating cspell configuration file: Because We Speak Spanglish
 
-We can edit the configuration's a bit, so it won't be jump simple english checking
+Remember how I mentioned I'm learning Spanish after that trip to Madrid? Well, might as well make our spell checker bilingual too. Who knows, maybe it'll help with my Spanish blog posts in the future (yes, that's coming - *próximamente*).
+
 ```json
 {
     // Version of the config file format
@@ -334,51 +368,71 @@ We can edit the configuration's a bit, so it won't be jump simple english checki
 }
 ```
 
-## Making this all make sense
+## Running spellcheck locally and overruling the merge checks
 
-We wan't to do this, so we won't have any weird spelling errors on our blog.\
-Because of this, we should also make it possible to merge only develop with main branch\
-To do this locally, add following code to the `.git/hooks/pre-merge-commit`
+### Local check: For the Impatient Developers
+
+Sometimes you just want to check things quickly without going through the whole merge process. Here's how:
+
 ```bash
-# Protection for main branch
-SOURCE_BRANCH=$(git rev-parse --abbrev-ref MERGE_HEAD)
+# Check a single file
+npx cspell path/to/your/file.md
 
-# If we're on main branch
-if [ "$CURRENT_BRANCH" = "main" ]; then
-    # Check if the merge is coming from develop
-    if [ "$SOURCE_BRANCH" != "develop" ]; then
-        echo "❌ ERROR: You can only merge into main from develop branch"
-        echo "Current merge attempt: $SOURCE_BRANCH -> main"
-        exit 1
-    fi
-fi
+# Check multiple specific files
+npx cspell file1.md file2.md
+
+# Check all markdown files in a directory
+npx cspell "**/*.md"
 ```
 
-Remotely, we will set up pull request checking:
-1. Go to your GitHub repository
-2. Click on "Settings"
-3. In the left sidebar, click "Branches"
-4. Under "Branch protection rules" click "Add rule"
-5. Set up the rule:
-   1. First, give your ruleset a name
-   2. In "Target branches" section, add target annd add `main` as target branch pattern
-   3. In the "Rules" section, you should enable:
-      - "Require a pull request before merging"
-      - "Block force pushes" 
-      - "Restrict deletions" 
-   4. Under "Require a pull request before merging" settings:
-      - Set "Required approvals" to at least 1 if you want reviews
-      - Set "Dismiss stale pull request approvals when new commits are pushed" 
-      - If you have code owners, keep "Require review from Code Owners" checked
-
-## Running spellcheck locally and overruling the merge 
-
-### Local check
-
-### Overruling the merge
-
-To make a merge, even with misspelled word, you can do the following\
-`--no-verify` flag skips all pre-merge hooks
 ```bash
+# Check a single file
+npx write-good path/to/your/file.md
+
+# Check multiple files
+npx write-good file1.md file2.md
+
+# Check all markdown files in a directory
+find . -name "*.md" -exec npx write-good {} \;
+```
+
+For more complex analysis, we are using TextLint and proselint
+```bash
+# Install textlint and common rules
+npm install --save-dev \
+  textlint \
+  textlint-rule-write-good \
+  textlint-rule-no-dead-link \
+  textlint-rule-terminology \
+  textlint-rule-period-in-list-item \
+  textlint-rule-no-start-duplicated-conjunction \
+  @textlint/textlint-plugin-markdown
+
+# Install proselint
+pip install proselint
+```
+
+
+### Overruling the merge checks: The Nuclear Option
+
+Sometimes you need to merge something urgently, even with typos. Like when it's Friday at 4:55 PM and you really want to start your weekend. (I'm not judging, we've all been there!) Here's how to do it:
+```bash
+# --no-verify flag skips all pre-merge hooks
 git merge --no-verify branch-name
 ```
+
+Remember, with great power comes great responsibility. Use this like you'd use sudo - only when you really need to!
+
+## Pro Tips from a Reformed Typo Offender
+
+- Add your technical terms to cspell.json immediately - trust me, you don't want to fix "cybersecurity" 50 times
+- Run checks locally before pushing - it's faster than waiting for GitHub Actions to tell you about that typo you already knew about
+- Don't blindly trust the grammar checker - sometimes "incorrect" grammar is more readable
+- Keep your custom word list somewhere safe - rebuilding it after a fresh clone isn't fun
+
+**¡Y eso es todo, mis amigos!**
+
+Remember, perfect grammar won't fix broken code, but it might make your readers focus on what you're actually trying to say. And isn't that the whole point of writing?\
+Happy coding, *y que tus pull requests sean siempre aprobados!*[^1] 🚀\
+P.S. If you found any typos in this post... well, clearly I need to update my `cspell.json`! 😉
+[^1]: And let your pull requests be always approved
