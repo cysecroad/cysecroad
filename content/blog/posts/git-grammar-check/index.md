@@ -125,3 +125,106 @@ Then, create *cspell.json*
 }
 ```
 
+### Testing if this works
+
+What should we do after completing every little part of making changes? **Verify** it works, of course.
+
+1. First, make sure to push the workflow file to repository (it's okay to do this on develop branch)
+    ```bash
+    git add .github/workflows/quality-check.yml
+    git commit -m "Add spell check workflow"
+    git push origin your-current-branch
+    ```
+2. Create a test branch with some intentional spelling mistakes:
+    ```bash
+    # Create and checkout a new branch
+    git checkout -b test-spellcheck
+
+    # Create a test markdown file with some spelling mistakes
+    echo "This is a testt documment with misspelled wurds." > test-post.md
+    ```
+
+
+## Local merging spell check
+
+We want to set this spell check in a way that when we do merge locally, it's invoked and mergin won't be available until this check passes.\
+For this, we will need to use Git hooks, as Git Actions only works for remote/cloud checks.
+
+1. First, install all the required packages
+    ```bash
+    npm install --save-dev cspell write-good
+    ```
+2. Create the hooks directory if it doesn't exist
+    ```bash
+    mkdir -p .git/hooks
+    ```
+3. Create pre-merge-commit hook and make it executable
+    ```bash 
+    vim .git/hooks/pre-merge-commit
+    ```
+
+    Now , copy the following into the hook
+    ```bash
+    #!/bin/bash
+
+    # This script runs automatically when you try to merge branches
+
+    # Get the name of the current branch we're on
+    # git rev-parse --abbrev-ref HEAD returns the short name of the current branch
+    CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+    # The branch we want to protect with spell checking
+    # Change this if you want to protect a different branch
+    TARGET_BRANCH="develop"
+
+    # Only run the checks when we're merging into the target branch (develop)
+    if [ "$CURRENT_BRANCH" = "$TARGET_BRANCH" ]; then
+        echo "Running spell and grammar checks before merge..."
+        
+        # Get a list of all markdown files that are staged for commit
+        # git diff --name-only : List changed files
+        # --cached : Look at staged files
+        # --diff-filter=ACM : Only look at Added, Changed, or Modified files
+        # grep -E '\.(md|mdx|txt)$' : Only look at markdown and text files
+        FILES=$(git diff --name-only --cached --diff-filter=ACM | grep -E '\.(md|mdx|txt)$')
+        
+        # If we found any markdown files to check
+        if [ -n "$FILES" ]; then
+            # Run spell check using cspell
+            # The '!' means "if the command fails"
+            # npx ensures we use the project's installed version of cspell
+            if ! npx cspell $FILES; then
+                echo "❌ Spell check failed! Please fix the spelling errors before merging."
+                # Exit with error code 1 to prevent the merge
+                exit 1
+            fi
+            
+            # Run grammar check using write-good
+            # We run this even if spell check fails
+            # '|| true' means the script continues even if write-good finds issues
+            echo "Grammar check (warnings):"
+            for file in $FILES; do
+                npx write-good "$file" || true
+            done
+            
+            # If we got here, spell check passed
+            echo "✅ Spell check passed!"
+            echo "⚠️  Review any grammar warnings above"
+        else
+            # No markdown files were changed
+            echo "No markdown files to check."
+        fi
+    fi
+
+    # Exit successfully - allow the merge to proceed
+    exit 0
+    ```
+
+    ```bash
+    chmod +x .git/hooks/pre-merge-commit
+    ```
+4. Now, when you try to merge locally
+    ```bash
+    git checkout develop
+    git merge test-spellcheck
+    ```
