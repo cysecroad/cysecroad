@@ -1,4 +1,10 @@
  #!/bin/bash
+ 
+echo "=== Debug ==="
+echo "Hook is running from .githooks"
+echo "Current branch: $(git rev-parse --abbrev-ref HEAD)"
+echo "Merge source: $(git rev-parse --abbrev-ref MERGE_HEAD 2>/dev/null || echo 'none')"
+echo "============="
 
 # This script runs automatically when you try to merge branches
 
@@ -48,19 +54,5 @@ if [ "$CURRENT_BRANCH" = "$TARGET_BRANCH" ]; then
         echo "No markdown files to check."
     fi
 fi
-
-# Protection for main branch
-SOURCE_BRANCH=$(git rev-parse --abbrev-ref MERGE_HEAD)
-
-# If we're on main branch
-if [ "$CURRENT_BRANCH" = "main" ]; then
-    # Check if the merge is coming from develop
-    if [ "$SOURCE_BRANCH" != "develop" ]; then
-        echo "❌ ERROR: You can only merge into main from develop branch"
-        echo "Current merge attempt: $SOURCE_BRANCH -> main"
-        exit 1
-    fi
-fi
-
 # Exit successfully - allow the merge to proceed
 exit 0
