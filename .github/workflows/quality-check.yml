@@ -38,6 +38,12 @@ jobs:
       - name: Install write-good
         run: npm install -g write-good
 
+      # Install dependencies including the Spanish dictionary
+      - name: Install dependencies
+        run: |
+          npm install
+          npm install --save-dev @cspell/dict-es-es  
+
       # Step 5: Run the spell checker
       - name: Run spell check
         run: |
