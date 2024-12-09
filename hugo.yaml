@@ -48,7 +48,7 @@ params:
       ¡Bienvenidos!
       This website is my personal blog where I document my journey into cybersecurity and showcase it to world.
       Follow along as I navigate this exciting path - I'd love to share my experiences with you! ¡Hasta luego, amigos!
-  # You can add this to control max width
+      
   profileMode:
     enabled: false
 

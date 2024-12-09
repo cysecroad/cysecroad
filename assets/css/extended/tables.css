@@ -1,0 +1,10 @@
+.table-wrapper {
+    display: block;
+    width: 100%;
+}
+
+.table-wrapper table {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}

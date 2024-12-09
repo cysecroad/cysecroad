@@ -1,0 +1,28 @@
+{{ $file := .Get 0 }}
+{{ $page := .Page }}
+{{ with $page.Resources.Get $file }}
+  {{ with . | transform.Unmarshal }}
+  <div class="table-wrapper">
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          {{ range index . 0 }}
+            <th>{{ . }}</th>
+          {{ end }}
+        </tr>
+      </thead>
+      <tbody>
+        {{ range after 1 . }}
+          <tr>
+            {{ range . }}
+              <td>{{ . }}</td>
+            {{ end }}
+          </tr>
+        {{ end }}
+      </tbody>
+    </table>
+  </div>
+  {{ end }}
+{{ else }}
+  {{ errorf "The %q shortcode was unable to find %s. See %s" $.Name $file $.Position }}
+{{ end }}
