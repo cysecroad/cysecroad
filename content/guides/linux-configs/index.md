@@ -1,6 +1,6 @@
 ---
 title: "The Actually Useful Linux Config Files"
-date: 2024-12-06T14:32:40+01:00
+date: 2024-12-15T14:32:40+01:00
 draft: false
 ShowToc: true
 
