@@ -28,7 +28,10 @@
       "VLSI",
       "hugo",
       "attrlink",
-      "vimeo"
+      "vimeo",
+      "linux",
+      "vimrc",
+      "inputrc"
   ], 
 
   "ignorePaths": [
